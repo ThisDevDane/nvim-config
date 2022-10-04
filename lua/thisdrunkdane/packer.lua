@@ -17,11 +17,40 @@ local function packer_startup()
     -- Packer
     use 'wbthomason/packer.nvim'
 
+    -- Treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = 'TSUpdate',
+        config = function()
+            require('thisdrunkdane.plugins.treesitter').init()
+        end,
+    }
+
     -- Language Servers
     use {
         'neovim/nvim-lspconfig',
+        requires = {
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' }
+        },
         config = function()
             require('thisdrunkdane.plugins.lspconfig').init()
+        end
+    }
+
+    use {
+        'folke/lsp-colors.nvim',
+        config = require('lsp-colors').setup()
+    }
+
+    use {
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require('trouble').setup()
+            vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle<cr>',
+                { silent = true, noremap = true }
+            )
         end
     }
 
@@ -31,11 +60,6 @@ local function packer_startup()
         config = function()
             require('thisdrunkdane.plugins.tokyonight').init()
         end
-    }
-
-    use {
-        'folke/lsp-colors.nvim',
-        config = require('lsp-colors').setup()
     }
 
     use {
@@ -52,11 +76,53 @@ local function packer_startup()
         config = require('nvim-tree').setup()
     }
 
-    -- Utilities
+    use {
+        'romgrk/barbar.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons' }
+    }
+
+    -- Completion
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-vsnip',
+            'hrsh7th/vim-vsnip',
+            {
+                'onsails/lspkind-nvim',
+                config = function()
+                    require('lspkind').init()
+                end
+            }
+       },
+        config = function()
+            require('thisdrunkdane.plugins.nvim-cmp').init()
+        end
+    }
+
     use 'kyazdani42/nvim-web-devicons'
+
+    -- Git Signs
+    use {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
+
+    -- Utilities
     use 'lukas-reineke/indent-blankline.nvim'
-    use 'voldikss/vim-floaterm'
+    use {
+        'voldikss/vim-floaterm',
+        config = function()
+            vim.keymap.set('n', '<leader>tt', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>')
+        end
+    }
     use 'jeffkreeftmeijer/vim-numbertoggle'
+    use 'unblevable/quick-scope'
 
     use {
         'hoob3rt/lualine.nvim',

@@ -12,10 +12,7 @@ local lua_settings = {
         },
         workspace = {
             -- Make the server aware of Neovim runtime files
-            library = {
-                [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-            },
+            library = vim.api.nvim_get_runtime_file("", true)
         },
         -- Do not send telemetry data containing a randomized but unique identifier
         telemetry = {
@@ -25,7 +22,7 @@ local lua_settings = {
 }
 
 local function on_attach(client, bufnr)
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    local bufopts = { noremap = true, silent = false, buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -48,6 +45,16 @@ local function on_attach(client, bufnr)
     if client.server_capabilities.documentFormattingProvider then
         vim.keymap.set('v', '<space>f', vim.lsp.buf.range_formatting, bufopts)
     end
+
+    if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_exec([[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]]   , false)
+    end
 end
 
 local function set_lsp_keymaps()
@@ -60,12 +67,49 @@ end
 
 local function init()
     set_lsp_keymaps()
-    local lsp = require('lspconfig')
 
-    lsp["sumneko_lua"].setup {
+    require("mason").setup()
+    require("mason-lspconfig").setup({
+        ensure_installed = { "gopls" }
+    })
+    local lsp = require('lspconfig')
+    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+            'documentation',
+            'detail',
+            'additionalTextEdits',
+        }
+    }
+
+    lsp["sumneko_lua"].setup({
+        capabilities = capabilities,
         on_attach = on_attach,
         settings = lua_settings
-    }
+    })
+
+    vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = "*.go",
+        callback = function()
+            vim.lsp.buf.formatting()
+        end
+    })
+
+    lsp['gopls'].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+            gopls = {
+                experimentalPostfixCompletions = true,
+                analyses = {
+                    unusedparams = true,
+                    shadow = true,
+                },
+                staticcheck = true,
+            }
+        }
+    })
 end
 
 return {

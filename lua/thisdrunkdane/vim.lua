@@ -46,10 +46,10 @@ local function create_user_autocommands()
 end
 
 local function set_vim_keymap()
-    vim.keymap.set('n', '<leader>h', '<CMD>wincmd h<CR>')
-    vim.keymap.set('n', '<leader>j', '<CMD>wincmd j<CR>')
-    vim.keymap.set('n', '<leader>k', '<CMD>wincmd k<CR>')
-    vim.keymap.set('n', '<leader>l', '<CMD>wincmd l<CR>')
+    -- vim.keymap.set('n', '<leader>h', '<CMD>wincmd h<CR>')
+    -- vim.keymap.set('n', '<leader>j', '<CMD>wincmd j<CR>')
+    -- vim.keymap.set('n', '<leader>k', '<CMD>wincmd k<CR>')
+    -- vim.keymap.set('n', '<leader>l', '<CMD>wincmd l<CR>')
 end
 
 local function init()
