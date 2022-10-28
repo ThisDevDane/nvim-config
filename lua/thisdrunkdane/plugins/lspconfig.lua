@@ -70,10 +70,10 @@ local function init()
 
     require("mason").setup()
     require("mason-lspconfig").setup({
-        ensure_installed = { "gopls" }
+        ensure_installed = { "sumneko_lua", "gopls" }
     })
     local lsp = require('lspconfig')
-    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
         properties = {

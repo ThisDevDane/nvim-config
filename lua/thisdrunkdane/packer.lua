@@ -26,7 +26,29 @@ local function packer_startup()
         end,
     }
 
-    -- Language Servers
+    -- Completion
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-vsnip',
+            'hrsh7th/vim-vsnip',
+            {
+                'onsails/lspkind-nvim',
+                config = function()
+                    require('lspkind').init()
+                end
+            }
+       },
+        config = function()
+            require('thisdrunkdane.plugins.nvim-cmp').init()
+        end
+    }
+
+   -- Language Servers
     use {
         'neovim/nvim-lspconfig',
         requires = {
@@ -79,28 +101,6 @@ local function packer_startup()
     use {
         'romgrk/barbar.nvim',
         requires = { 'kyazdani42/nvim-web-devicons' }
-    }
-
-    -- Completion
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-vsnip',
-            'hrsh7th/vim-vsnip',
-            {
-                'onsails/lspkind-nvim',
-                config = function()
-                    require('lspkind').init()
-                end
-            }
-       },
-        config = function()
-            require('thisdrunkdane.plugins.nvim-cmp').init()
-        end
     }
 
     use 'kyazdani42/nvim-web-devicons'

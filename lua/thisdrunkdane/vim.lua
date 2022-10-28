@@ -5,6 +5,7 @@ end
 local function set_vim_opt()
     vim.opt.shiftwidth = 4
     vim.opt.softtabstop = 4
+    vim.opt.tabstop = 4
     vim.opt.expandtab = true
 
     vim.opt.secure = true
