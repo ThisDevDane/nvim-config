@@ -59,11 +59,6 @@ local function packer_startup()
     }
 
     use {
-        'folke/lsp-colors.nvim',
-        config = require('lsp-colors').setup()
-    }
-
-    use {
         'folke/trouble.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
         config = function()
