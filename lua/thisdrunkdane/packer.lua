@@ -117,6 +117,8 @@ local function packer_startup()
         'voldikss/vim-floaterm',
         config = function()
             vim.keymap.set('n', '<leader>tt', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>')
+            vim.keymap.set('n', '<leader>lg', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>')
+            vim.keymap.set('n', '<leader>k9', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 k9s<CR>')
         end
     }
     use 'jeffkreeftmeijer/vim-numbertoggle'
