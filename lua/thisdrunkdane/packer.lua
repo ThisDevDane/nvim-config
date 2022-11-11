@@ -49,7 +49,7 @@ local function packer_startup()
     }
 
    -- Language Servers
-    use 'williamboman.mason.nvim'
+    use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use {
         'neovim/nvim-lspconfig',
