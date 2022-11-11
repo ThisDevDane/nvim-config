@@ -49,12 +49,10 @@ local function packer_startup()
     }
 
    -- Language Servers
+    use 'williamboman.mason.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
     use {
         'neovim/nvim-lspconfig',
-        requires = {
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' }
-        },
         config = function()
             require('thisdrunkdane.plugins.lspconfig').init()
         end
