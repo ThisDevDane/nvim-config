@@ -21,9 +21,7 @@ local function packer_startup()
     use {
         'nvim-treesitter/nvim-treesitter',
         run = 'TSUpdate',
-        config = function()
-            require('thisdrunkdane.plugins.treesitter').init()
-        end,
+        config = require('thisdrunkdane.plugins.treesitter').init()
     }
 
     -- Completion
