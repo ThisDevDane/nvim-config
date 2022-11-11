@@ -21,7 +21,9 @@ local function packer_startup()
     use {
         'nvim-treesitter/nvim-treesitter',
         run = 'TSUpdate',
-        config = require('thisdrunkdane.plugins.treesitter').init()
+        config = function()
+            require('thisdrunkdane.plugins.treesitter').init()
+        end
     }
 
     -- Completion
@@ -77,7 +79,9 @@ local function packer_startup()
 
     use {
         'petertriho/nvim-scrollbar',
-        config = require('scrollbar').setup()
+        config = function()
+            require('scrollbar').setup()
+        end
     }
 
     use {
@@ -86,7 +90,9 @@ local function packer_startup()
             'kyazdani42/nvim-web-devicons',
         },
         tag = 'nightly',
-        config = require('nvim-tree').setup()
+        config = function()
+            require('nvim-tree').setup()
+        end
     }
 
     use {
@@ -133,7 +139,9 @@ local function packer_startup()
 
     use {
         'numToStr/Comment.nvim',
-        config = require('Comment').setup()
+        config = function()
+            require('Comment').setup()
+        end
     }
 end
 
