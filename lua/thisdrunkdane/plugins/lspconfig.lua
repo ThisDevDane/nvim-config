@@ -22,7 +22,7 @@ local lua_settings = {
 }
 
 local function on_attach(client, bufnr)
-    local bufopts = { noremap = true, silent = false, buffer = bufnr }
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -37,14 +37,12 @@ local function on_attach(client, bufnr)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-
-    if client.server_capabilities.documentFormattingProvider then
-        vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-    end
-
-    if client.server_capabilities.documentFormattingProvider then
-        vim.keymap.set('v', '<space>f', vim.lsp.buf.range_formatting, bufopts)
-    end
+    vim.keymap.set('n', '<space>f', function()
+        vim.lsp.buf.format { async = true }
+    end, bufopts)
+    vim.keymap.set('v', '<space>f', function()
+        vim.lsp.buf.format { async = true }
+    end, bufopts)
 
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_exec([[
