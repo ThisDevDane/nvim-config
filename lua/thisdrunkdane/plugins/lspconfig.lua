@@ -72,6 +72,7 @@ local function init()
     require("mason-lspconfig").setup({
         ensure_installed = { "sumneko_lua", "tsserver", "gopls" }
     })
+
     local lsp = require('lspconfig')
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -109,6 +110,11 @@ local function init()
                 staticcheck = true,
             }
         }
+    })
+
+    lsp['tsserver'].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
     })
 end
 
