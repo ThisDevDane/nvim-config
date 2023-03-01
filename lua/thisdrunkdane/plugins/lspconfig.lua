@@ -68,7 +68,7 @@ local function init()
 
     require("mason").setup()
     require("mason-lspconfig").setup({
-        ensure_installed = { "sumneko_lua", "tsserver", "gopls" }
+        ensure_installed = { "lua_ls", "tsserver", "gopls" }
     })
 
     local lsp = require('lspconfig')
@@ -82,7 +82,7 @@ local function init()
         }
     }
 
-    lsp["sumneko_lua"].setup({
+    lsp["lua_ls"].setup({
         capabilities = capabilities,
         on_attach = on_attach,
         settings = lua_settings
@@ -91,7 +91,7 @@ local function init()
     vim.api.nvim_create_autocmd('BufWritePre', {
         pattern = "*.go",
         callback = function()
-            vim.lsp.buf.formatting()
+            vim.lsp.buf.formatting_sync()
         end
     })
 

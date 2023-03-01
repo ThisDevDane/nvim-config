@@ -26,6 +26,13 @@ local function packer_startup()
         end
     }
 
+    use {
+        'IndianBoy42/tree-sitter-just',
+        config = function()
+            require('tree-sitter-just').setup({})
+        end
+    }
+
     -- Completion
     use {
         'hrsh7th/nvim-cmp',
@@ -42,13 +49,13 @@ local function packer_startup()
                     require('lspkind').init()
                 end
             }
-       },
+        },
         config = function()
             require('thisdrunkdane.plugins.nvim-cmp').init()
         end
     }
 
-   -- Language Servers
+    -- Language Servers
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use {
@@ -71,9 +78,10 @@ local function packer_startup()
 
     -- Theme/UI
     use {
-        'folke/tokyonight.nvim',
+        'catppuccin/nvim',
+        as = 'catppuccin',
         config = function()
-            require('thisdrunkdane.plugins.tokyonight').init()
+            require('thisdrunkdane.plugins.catppuccin').init()
         end
     }
 
@@ -141,6 +149,21 @@ local function packer_startup()
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
+        end
+    }
+
+    use 'neomake/neomake'
+
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+            require("which-key").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
         end
     }
 end
