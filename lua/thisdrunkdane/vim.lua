@@ -25,6 +25,7 @@ local function set_vim_opt()
     vim.opt.hlsearch = false
 
     vim.opt.mouse = 'a'
+    vim.opt.makeprg = 'just'
 end
 
 local function create_user_autocommands()
