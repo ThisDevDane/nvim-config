@@ -166,6 +166,16 @@ local function packer_startup()
             }
         end
     }
+
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+        },
+        config = function()
+            require('thisdrunkdane.plugins.telescope').init()
+        end
+    }
 end
 
 local function init()
