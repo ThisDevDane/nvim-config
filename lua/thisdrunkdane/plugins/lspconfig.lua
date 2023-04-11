@@ -22,27 +22,34 @@ local lua_settings = {
 }
 
 local function on_attach(client, bufnr)
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wl', function()
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Go to declaration' })
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Go to definition' })
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Hover signature' })
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Go to implementation' })
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Signature help' })
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Add workspace folder' })
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Remove workspace folder' })
+    vim.keymap.set('n', '<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, bufopts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<space>f', function()
+    end, { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] List workspace folders' })
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Go to type definition' })
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Rename' })
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] List code actions' })
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references,
+        { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Go to references' })
+    vim.keymap.set('n', '<leader>f', function()
         vim.lsp.buf.format { async = true }
-    end, bufopts)
-    vim.keymap.set('v', '<space>f', function()
-        vim.lsp.buf.format { async = true }
-    end, bufopts)
+    end, { noremap = true, silent = true, buffer = bufnr, desc = '[LSP] Format' })
 
     if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_exec([[
@@ -56,11 +63,13 @@ local function on_attach(client, bufnr)
 end
 
 local function set_lsp_keymaps()
-    local opts = { noremap = true, silent = true }
-    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-    vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float,
+        { noremap = true, silent = true, desc = '[LSP] Open diagnostics' })
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,
+        { noremap = true, silent = true, desc = '[LSP] Previous diagnostic' })
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap = true, silent = true, desc = '[LSP] Next diagnostic' })
+    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
+        { noremap = true, silent = true, desc = '[LSP] Set LoC list' })
 end
 
 local function init()

@@ -27,6 +27,13 @@ local function packer_startup()
     }
 
     use {
+        'nvim-treesitter/nvim-treesitter-context',
+        config = function()
+            require('treesitter-context').setup({})
+        end
+    }
+
+    use {
         'IndianBoy42/tree-sitter-just',
         config = function()
             require('tree-sitter-just').setup({})
@@ -100,6 +107,7 @@ local function packer_startup()
         tag = 'nightly',
         config = function()
             require('nvim-tree').setup()
+            vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeToggle<cr>', { silent = true, noremap = true })
         end
     }
 
@@ -123,9 +131,9 @@ local function packer_startup()
     use {
         'voldikss/vim-floaterm',
         config = function()
-            vim.keymap.set('n', '<leader>tt', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>')
-            vim.keymap.set('n', '<leader>lg', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>')
-            vim.keymap.set('n', '<leader>k9', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 k9s<CR>')
+            vim.keymap.set('n', '<leader>tt', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>', { desc = '[FT] New terminal' })
+            vim.keymap.set('n', '<leader>lg', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>', { desc = '[FT] LazyGit' })
+            vim.keymap.set('n', '<leader>k9', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 k9s<CR>', { desc = '[FT] k9s' })
         end
     }
     use 'jeffkreeftmeijer/vim-numbertoggle'

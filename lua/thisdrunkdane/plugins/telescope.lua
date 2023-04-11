@@ -10,24 +10,28 @@ local function init()
         }
     }
 
-    local map = vim.api.nvim_set_keymap
-    local options = { noremap = true }
+    local ts = require('telescope.builtin')
 
     -- Builtin
-    map('n', '<leader>ft', '<CMD>lua require("telescope.builtin").treesitter()<CR>', options)
-    map('n', '<leader>fg', '<CMD>lua require("telescope.builtin").git_files()<CR>', options)
-    map('n', '<leader>ff', '<CMD>lua require("telescope.builtin").find_files{ hidden = true }<CR>', options)
-    map('n', '<leader>fl', '<CMD>lua require("telescope.builtin").live_grep()<CR>', options)
-    map('n', '<leader>fb', '<CMD>lua require("telescope.builtin").buffers()<CR>', options)
-    map('n', '<leader>fh', '<CMD>lua require("telescope.builtin").help_tags()<CR>', options)
-    map('n', '<leader>fd', '<CMD>lua require("telescope.builtin").diagnostics()<CR>', options)
-    map('n', '<leader>fr', '<CMD>lua require("telescope.builtin").registers()<CR>', options)
+    vim.keymap.set('n', '<leader>ft', ts.treesitter, { noremap = true, desc = '[TELE] Find tree-sitter' })
+    vim.keymap.set('n', '<leader>fg', ts.git_files, { noremap = true, desc = '[TELE] Find git files' })
+    vim.keymap.set('n', '<C-p>', function()
+        ts.find_files { hidden = true }
+    end, { noremap = true, desc = '[TELE] List files' })
+    vim.keymap.set('n', '<leader>fl', ts.live_grep, { noremap = true, desc = '[TELE] Live grep' })
+    vim.keymap.set('n', '<leader>fb', ts.buffers, { noremap = true, desc = '[TELE] Find buffers' })
+    vim.keymap.set('n', '<leader>fh', ts.help_tags, { noremap = true, desc = '[TELE] Find help tags' })
+    vim.keymap.set('n', '<leader>fd', ts.diagnostics, { noremap = true, desc = '[TELE] Find diagnostics' })
+    vim.keymap.set('n', '<leader>fr', ts.registers, { noremap = true, desc = '[TELE] Find registers' })
+    vim.keymap.set('n', '<leader>fm', ts.keymaps, { noremap = true, desc = '[TELE] Find keymaps' })
 
     -- Language Servers
-    map('n', '<leader>lsd', '<CMD>lua require("telescope.builtin").lsp_definitions{}<CR>', options)
-    map('n', '<leader>lsi', '<CMD>lua require("telescope.builtin").lsp_implementations{}<CR>', options)
-    map('n', '<leader>lsl', '<CMD>lua require("telescope.builtin").lsp_code_actions{}<CR>', options)
-    map('n', '<leader>lst', '<CMD>lua require("telescope.builtin").lsp_type_definitions{}<CR>', options)
+    vim.keymap.set('n', '<leader>lsd', ts.lsp_definitions, { noremap = true, desc = '[TELE] Find lsp definitions' })
+    vim.keymap.set('n', '<leader>lsr', ts.lsp_references, { noremap = true, desc = '[TELE] Find lsp references' })
+    vim.keymap.set('n', '<leader>lsi', ts.lsp_implementations,
+        { noremap = true, desc = '[TELE] Find lsp implementations' })
+    vim.keymap.set('n', '<leader>lst', ts.lsp_type_definitions,
+        { noremap = true, desc = '[TELE] Find lsp type definitions' })
 end
 
 return {
