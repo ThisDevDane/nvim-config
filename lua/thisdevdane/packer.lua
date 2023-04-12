@@ -65,6 +65,11 @@ return require('packer').startup(function(use) -- Packer
         end
     }
 
+    -- DAP
+    use 'mfussenegger/nvim-dap'
+    use 'rcarriga/nvim-dap-ui'
+    use 'leoluz/nvim-dap-go'
+
     -- Theme/UI
     use {
         'catppuccin/nvim',
