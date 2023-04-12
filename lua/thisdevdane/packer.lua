@@ -27,6 +27,7 @@ return require('packer').startup(function(use) -- Packer
             require('tree-sitter-just').setup({})
         end
     }
+    use 'HiPhish/nvim-ts-rainbow2'
 
     -- Language Servers
     use {

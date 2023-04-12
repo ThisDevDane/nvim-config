@@ -16,7 +16,8 @@ require("catppuccin").setup({
         native_lsp = {
             enabled = true,
         },
-        barbar = true,
+        treesitter_context = true,
+        ts_rainbow2 = true
     }
 })
 
