@@ -13,7 +13,9 @@ local ts = require('telescope.builtin')
 
 -- Builtin
 vim.keymap.set('n', '<leader>ft', ts.treesitter, { noremap = true, desc = '[TELE] Find tree-sitter' })
-vim.keymap.set('n', '<C-p>', ts.git_files, { noremap = true, desc = '[TELE] Find git files' })
+vim.keymap.set('n', '<C-p>', function() 
+    ts.git_files { show_untracked = true }
+end, { noremap = true, desc = '[TELE] Find git files' })
 vim.keymap.set('n', '<leader>ff', function()
     ts.find_files { hidden = true }
 end, { noremap = true, desc = '[TELE] List files' })
