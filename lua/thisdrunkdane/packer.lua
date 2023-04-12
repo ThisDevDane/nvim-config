@@ -93,27 +93,24 @@ local function packer_startup()
     }
 
     use {
-        'petertriho/nvim-scrollbar',
-        config = function()
-            require('scrollbar').setup()
-        end
-    }
-
-    use {
         'kyazdani42/nvim-tree.lua',
         requires = {
             'kyazdani42/nvim-web-devicons',
         },
         tag = 'nightly',
         config = function()
-            require('nvim-tree').setup()
+            require('nvim-tree').setup({
+                disable_netrw = true,
+                hijack_netrw = true,
+                open_on_setup = true,
+                actions = {
+                    open_file = {
+                        quit_on_open = true
+                    }
+                }
+            })
             vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeToggle<cr>', { silent = true, noremap = true })
         end
-    }
-
-    use {
-        'romgrk/barbar.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons' }
     }
 
     use 'kyazdani42/nvim-web-devicons'
@@ -131,9 +128,12 @@ local function packer_startup()
     use {
         'voldikss/vim-floaterm',
         config = function()
-            vim.keymap.set('n', '<leader>tt', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>', { desc = '[FT] New terminal' })
-            vim.keymap.set('n', '<leader>lg', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>', { desc = '[FT] LazyGit' })
-            vim.keymap.set('n', '<leader>k9', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 k9s<CR>', { desc = '[FT] k9s' })
+            vim.keymap.set('n', '<leader>tt', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>',
+                { desc = '[FT] New terminal' })
+            vim.keymap.set('n', '<leader>lg', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>',
+                { desc = '[FT] LazyGit' })
+            vim.keymap.set('n', '<leader>k9', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 k9s<CR>',
+                { desc = '[FT] k9s' })
         end
     }
     use 'jeffkreeftmeijer/vim-numbertoggle'
@@ -159,8 +159,6 @@ local function packer_startup()
             require('Comment').setup()
         end
     }
-
-    use 'neomake/neomake'
 
     use {
         "folke/which-key.nvim",

@@ -1,5 +1,7 @@
 local function set_vim_g()
     vim.g.mapleader = ' '
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
 end
 
 local function set_vim_opt()
@@ -48,7 +50,7 @@ local function create_user_autocommands()
 end
 
 local function set_vim_keymap()
-    vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true }) -- Half page down and center 
+    vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true }) -- Half page down and center
     vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true }) -- Half page up and center
 
     vim.keymap.set('n', 'n', 'nzzzv', { noremap = true }) -- Next result, center and unfold

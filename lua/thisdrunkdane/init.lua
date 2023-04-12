@@ -1,6 +1,6 @@
 local function init()
-    require('thisdrunkdane.packer').init()
     require('thisdrunkdane.vim').init()
+    require('thisdrunkdane.packer').init()
 end
 
 return {
