@@ -1,38 +1,26 @@
-local function packer_verify()
-    local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-        vim.fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.api.nvim_command('packadd packer.nvim')
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd [[packadd packer.nvim]]
+        return true
     end
+    return false
 end
 
-local function packer_startup()
-    local packer = require('packer')
-    packer.init()
-    packer.reset()
+local packer_bootstrap = ensure_packer()
+vim.cmd [[packadd packer.nvim]]
 
-    local use = packer.use
-
-    -- Packer
+return require('packer').startup(function(use) -- Packer
     use 'wbthomason/packer.nvim'
 
     -- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
         run = 'TSUpdate',
-        config = function()
-            require('thisdevdane.plugins.treesitter').init()
-        end
     }
-
-    use {
-        'nvim-treesitter/nvim-treesitter-context',
-        config = function()
-            require('treesitter-context').setup({})
-        end
-    }
-
+    use 'nvim-treesitter/nvim-treesitter-context'
     use {
         'IndianBoy42/tree-sitter-just',
         config = function()
@@ -40,36 +28,29 @@ local function packer_startup()
         end
     }
 
-    -- Completion
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-vsnip',
-            'hrsh7th/vim-vsnip',
-            {
-                'onsails/lspkind-nvim',
-                config = function()
-                    require('lspkind').init()
-                end
-            }
-        },
-        config = function()
-            require('thisdevdane.plugins.nvim-cmp').init()
-        end
-    }
-
     -- Language Servers
-    use 'williamboman/mason.nvim'
-    use 'williamboman/mason-lspconfig.nvim'
     use {
-        'neovim/nvim-lspconfig',
-        config = function()
-            require('thisdevdane.plugins.lspconfig').init()
-        end
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v2.x',
+        requires = {
+            -- LSP Support
+            { 'neovim/nvim-lspconfig' }, -- Required
+            { -- Optional
+                'williamboman/mason.nvim',
+                run = function()
+                    pcall(vim.cmd, 'MasonUpdate')
+                end,
+            },
+            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+
+            -- Autocompletion
+            { 'hrsh7th/nvim-cmp' }, -- Required
+            { 'hrsh7th/cmp-buffer' }, -- Required
+            { 'hrsh7th/cmp-path' }, -- Required
+            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+            { 'L3MON4D3/LuaSnip' }, -- Required
+            { 'saadparwaiz1/cmp_luasnip' }
+        }
     }
 
     use {
@@ -87,35 +68,11 @@ local function packer_startup()
     use {
         'catppuccin/nvim',
         as = 'catppuccin',
-        config = function()
-            require('thisdevdane.plugins.catppuccin').init()
-        end
-    }
-
-    use {
-        'kyazdani42/nvim-tree.lua',
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-        },
-        tag = 'nightly',
-        config = function()
-            require('nvim-tree').setup({
-                disable_netrw = true,
-                hijack_netrw = true,
-                open_on_setup = true,
-                actions = {
-                    open_file = {
-                        quit_on_open = true
-                    }
-                }
-            })
-            vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeToggle<cr>', { silent = true, noremap = true })
-        end
     }
 
     use 'kyazdani42/nvim-web-devicons'
-
-    -- Git Signs
+    use 'kyazdani42/nvim-tree.lua'
+    use 'hoob3rt/lualine.nvim'
     use {
         'lewis6991/gitsigns.nvim',
         config = function()
@@ -125,34 +82,16 @@ local function packer_startup()
 
     -- Utilities
     use 'lukas-reineke/indent-blankline.nvim'
-    use {
-        'voldikss/vim-floaterm',
-        config = function()
-            vim.keymap.set('n', '<leader>tt', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>',
-                { desc = '[FT] New terminal' })
-            vim.keymap.set('n', '<leader>lg', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>',
-                { desc = '[FT] LazyGit' })
-            vim.keymap.set('n', '<leader>k9', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 k9s<CR>',
-                { desc = '[FT] k9s' })
-        end
-    }
+    use 'voldikss/vim-floaterm'
     use 'jeffkreeftmeijer/vim-numbertoggle'
     use 'unblevable/quick-scope'
-
-    use {
-        'hoob3rt/lualine.nvim',
-        config = function()
-            require('thisdevdane.plugins.lualine').init()
-        end
-    }
-
     use {
         'takac/vim-hardtime', -- see http://vimcasts.org/blog/2013/02/habit-breaking-habit-making
         config = function()
-            require('thisdevdane.plugins.hardtime').init()
+            vim.g.hardtime_default_on = 0
+            vim.g.hardtime_showmsg = 1
         end
     }
-
     use {
         'numToStr/Comment.nvim',
         config = function()
@@ -172,23 +111,14 @@ local function packer_startup()
             }
         end
     }
-
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
             'nvim-lua/plenary.nvim',
         },
-        config = function()
-            require('thisdevdane.plugins.telescope').init()
-        end
     }
-end
 
-local function init()
-    packer_verify()
-    packer_startup()
-end
-
-return {
-    init = init
-}
+    if packer_bootstrap then
+        require('packer').sync()
+    end
+end)

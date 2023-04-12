@@ -1,1 +1,1 @@
-require 'thisdevdane'.init()
+require('thisdevdane')
