@@ -22,7 +22,7 @@ local function packer_startup()
         'nvim-treesitter/nvim-treesitter',
         run = 'TSUpdate',
         config = function()
-            require('thisdrunkdane.plugins.treesitter').init()
+            require('thisdevdane.plugins.treesitter').init()
         end
     }
 
@@ -58,7 +58,7 @@ local function packer_startup()
             }
         },
         config = function()
-            require('thisdrunkdane.plugins.nvim-cmp').init()
+            require('thisdevdane.plugins.nvim-cmp').init()
         end
     }
 
@@ -68,7 +68,7 @@ local function packer_startup()
     use {
         'neovim/nvim-lspconfig',
         config = function()
-            require('thisdrunkdane.plugins.lspconfig').init()
+            require('thisdevdane.plugins.lspconfig').init()
         end
     }
 
@@ -88,7 +88,7 @@ local function packer_startup()
         'catppuccin/nvim',
         as = 'catppuccin',
         config = function()
-            require('thisdrunkdane.plugins.catppuccin').init()
+            require('thisdevdane.plugins.catppuccin').init()
         end
     }
 
@@ -142,14 +142,14 @@ local function packer_startup()
     use {
         'hoob3rt/lualine.nvim',
         config = function()
-            require('thisdrunkdane.plugins.lualine').init()
+            require('thisdevdane.plugins.lualine').init()
         end
     }
 
     use {
         'takac/vim-hardtime', -- see http://vimcasts.org/blog/2013/02/habit-breaking-habit-making
         config = function()
-            require('thisdrunkdane.plugins.hardtime').init()
+            require('thisdevdane.plugins.hardtime').init()
         end
     }
 
@@ -179,7 +179,7 @@ local function packer_startup()
             'nvim-lua/plenary.nvim',
         },
         config = function()
-            require('thisdrunkdane.plugins.telescope').init()
+            require('thisdevdane.plugins.telescope').init()
         end
     }
 end

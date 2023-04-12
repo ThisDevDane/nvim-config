@@ -1,1 +1,1 @@
-require 'thisdrunkdane'.init()
+require 'thisdevdane'.init()
