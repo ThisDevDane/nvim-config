@@ -17,6 +17,9 @@ lsp.ensure_installed({
     'tsserver',
     'gopls',
     'omnisharp'
+    'svelte',
+    'tailwindcss',
+    'cssls'
 })
 
 lsp.set_sign_icons({

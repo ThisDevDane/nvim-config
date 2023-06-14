@@ -17,7 +17,11 @@ require("catppuccin").setup({
             enabled = true,
         },
         treesitter_context = true,
-        ts_rainbow2 = true
+        ts_rainbow2 = true,
+        dap = {
+            enabled = true,
+            enable_ui = true, -- enable nvim-dap-ui
+        }
     }
 })
 
