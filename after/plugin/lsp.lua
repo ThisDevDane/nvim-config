@@ -15,7 +15,8 @@ end)
 lsp.ensure_installed({
     'lua_ls',
     'tsserver',
-    'gopls'
+    'gopls',
+    'omnisharp'
 })
 
 lsp.set_sign_icons({
@@ -39,15 +40,50 @@ require('lspconfig').gopls.setup({
         }
     }
 })
+require('lspconfig').omnisharp.setup({
+    enable_import_completion = true,
+    on_attach = function(client, bufnr)
+        lsp.default_keymaps({ buffer = bufnr })
+
+        vim.keymap.set('n', '<leader>f', function()
+            vim.lsp.buf.format { async = true }
+        end, { buffer = bufnr, desc = '[LSP] Format' })
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+            { buffer = bufnr, desc = '[LSP] List code actions' })
+
+        -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483#issuecomment-1492605642
+        local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
+        for i, v in ipairs(tokenModifiers) do
+            local tmp = string.gsub(v, ' ', '_')
+            tokenModifiers[i] = string.gsub(tmp, '-_', '')
+        end
+        local tokenTypes = client.server_capabilities.semanticTokensProvider.legend.tokenTypes
+        for i, v in ipairs(tokenTypes) do
+            local tmp = string.gsub(v, ' ', '_')
+            tokenTypes[i] = string.gsub(tmp, '-_', '')
+        end
+    end
+})
+
+lsp.format_on_save({
+    format_opts = {
+        async = false,
+        timeout_ms = 10000,
+    },
+    servers = {
+        ['gopls'] = { 'go' }
+    }
+})
+
 
 lsp.setup()
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-    pattern = "*.go",
-    callback = function()
-        vim.lsp.buf.formatting_sync()
-    end
-})
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+--     pattern = "*.go",
+--     callback = function()
+--         vim.lsp.buf.format({ async = false })
+--     end
+-- })
 
 
 vim.diagnostic.config({
