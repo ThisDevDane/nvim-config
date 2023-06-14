@@ -16,7 +16,7 @@ lsp.ensure_installed({
     'lua_ls',
     'tsserver',
     'gopls',
-    'omnisharp'
+    'omnisharp',
     'svelte',
     'tailwindcss',
     'cssls'
