@@ -120,7 +120,13 @@ return require('packer').startup(function(use) -- Packer
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
                 -- refer to the configuration section below
+        use {
+            "nvim-neotest/neotest",
+            requires = {
+                { "nvim-lua/plenary.nvim" },
+                { "Issafalcon/neotest-dotnet" },
             }
+        }
         end
     }
     use {
