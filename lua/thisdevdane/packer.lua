@@ -95,6 +95,12 @@ return require('packer').startup({
                 { "Issafalcon/neotest-dotnet" },
             }
         }
+        use {
+            "aserowy/tmux.nvim",
+            config = function()
+                require("tmux").setup()
+            end
+        }
         use 'lukas-reineke/indent-blankline.nvim'
         use 'voldikss/vim-floaterm'
         use 'jeffkreeftmeijer/vim-numbertoggle'
