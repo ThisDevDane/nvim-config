@@ -137,6 +137,7 @@ return require('packer').startup({
                 'nvim-lua/plenary.nvim',
             },
         }
+        use 'RRethy/vim-illuminate'
 
         if packer_bootstrap then
             require('packer').sync()
