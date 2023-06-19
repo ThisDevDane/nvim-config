@@ -19,7 +19,8 @@ lsp.ensure_installed({
     'omnisharp',
     'svelte',
     'tailwindcss',
-    'cssls'
+    'cssls',
+    'rust_analyzer'
 })
 
 lsp.set_sign_icons({
@@ -74,7 +75,8 @@ lsp.format_on_save({
         timeout_ms = 10000,
     },
     servers = {
-        ['gopls'] = { 'go' }
+        ['gopls'] = { 'go' },
+        ['rust_analyzer'] = { 'rust' }
     }
 })
 
