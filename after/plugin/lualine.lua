@@ -1,6 +1,6 @@
 require('lualine').setup {
     options = {
-        --      extensions = { 'fzf', 'quickfix' },
+        extensions = { 'fzf', 'quickfix' },
         theme = 'catppuccin'
     }
 }

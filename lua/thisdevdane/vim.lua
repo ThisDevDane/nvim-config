@@ -31,6 +31,8 @@ vim.opt.makeprg = 'just'
 
 vim.opt.signcolumn = "yes"
 
+vim.opt.cmdheight = 0
+
 local augroup = vim.api.nvim_create_augroup('user_cmds', { clear = true })
 
 vim.api.nvim_create_autocmd('FileType', {
