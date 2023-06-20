@@ -30,6 +30,11 @@ return require('packer').startup({
         }
         use 'HiPhish/nvim-ts-rainbow2'
 
+
+        use { 'L3MON4D3/LuaSnip',
+            requires = { 'rafamadriz/friendly-snippets' }
+        }
+
         -- Language Servers
         use {
             'VonHeikemen/lsp-zero.nvim',
