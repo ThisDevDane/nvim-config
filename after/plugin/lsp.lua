@@ -8,8 +8,6 @@ lsp.on_attach(function(client, bufnr)
     end, { buffer = bufnr, desc = '[LSP] Format' })
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
         { buffer = bufnr, desc = '[LSP] List code actions' })
-
-
 end)
 
 lsp.ensure_installed({
@@ -96,20 +94,26 @@ vim.diagnostic.config({
 })
 
 local cmp = require('cmp')
+local cmp_action = require('lsp-zero').cmp_action()
+require('luasnip.loaders.from_vscode').lazy_load()
 
 cmp.setup({
     sources = {
-        { name = 'path' },
-        { name = 'treesitter' },
         { name = 'nvim_lsp' },
-        { name = 'buffer', keyword_length = 3 },
-        { name = 'luasnip', keyword_length = 2 },
+        { name = 'treesitter' },
+        { name = 'buffer',    keyword_length = 3 },
+        { name = 'luasnip',   keyword_length = 2 },
+        { name = 'path' },
     },
     preselect = 'item',
     completion = {
         completeopt = 'menu,menuone,noinsert'
     },
     mapping = {
-        ['<CR>'] = cmp.mapping.confirm({ select = true })
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
     }
 })
+
+require "fidget".setup({})
