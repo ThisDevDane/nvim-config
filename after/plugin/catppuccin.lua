@@ -1,6 +1,9 @@
 require("catppuccin").setup({
     flavour = 'macchiato',
     show_end_of_buffer = true,
+    dim_inactive = {
+        enabled = true
+    },
     integrations = {
         cmp = true,
         gitsigns = true,

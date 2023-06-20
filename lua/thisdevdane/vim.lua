@@ -2,7 +2,7 @@ vim.g.mapleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.guicursor = 'n:hor20,v-sm:hor20-blinkwait300-blinkon200-blinkoff150,c-i-ci-ve:ver25,r-cr-o:hor20'
+vim.opt.guicursor = 'n:block,v-sm:block-blinkwait300-blinkon200-blinkoff150,c-i-ci-ve:ver25,r-cr-o:hor20'
 vim.opt.cursorline = true
 
 vim.opt.shiftwidth = 4
