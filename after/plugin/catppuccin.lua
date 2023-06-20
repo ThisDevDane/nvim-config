@@ -24,7 +24,8 @@ require("catppuccin").setup({
         dap = {
             enabled = true,
             enable_ui = true, -- enable nvim-dap-ui
-        }
+        },
+        fidget = true,
     }
 })
 
