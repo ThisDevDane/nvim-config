@@ -13,6 +13,7 @@ require("catppuccin").setup({
             enabled = true
         },
         mason = true,
+        markdown = true,
         treesitter = true,
         lsp_trouble = true,
         which_key = true,
@@ -26,6 +27,8 @@ require("catppuccin").setup({
             enable_ui = true, -- enable nvim-dap-ui
         },
         fidget = true,
+        neotest = true,
+        illuminate = true,
     }
 })
 
