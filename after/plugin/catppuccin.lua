@@ -2,7 +2,8 @@ require("catppuccin").setup({
     flavour = 'macchiato',
     show_end_of_buffer = true,
     dim_inactive = {
-        enabled = true
+        enabled = true,
+        percentage = 0.05
     },
     integrations = {
         cmp = true,
