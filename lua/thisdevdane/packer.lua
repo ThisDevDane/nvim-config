@@ -35,6 +35,9 @@ return require('packer').startup({
             requires = { 'rafamadriz/friendly-snippets' }
         }
 
+        -- Session
+        use 'rmagatti/auto-session'
+
         -- Language Servers
         use {
             'VonHeikemen/lsp-zero.nvim',
