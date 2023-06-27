@@ -123,6 +123,11 @@ return require('packer').startup({
         }
 
         use {
+            'folke/todo-comments.nvim',
+            requires = { 'nvim-lua/plenary.nvim' }
+        }
+
+        use {
             "folke/which-key.nvim",
             config = function()
                 vim.o.timeout = true
