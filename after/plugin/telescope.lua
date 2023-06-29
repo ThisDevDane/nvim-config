@@ -33,3 +33,4 @@ vim.keymap.set('n', '<leader>lsi', ts.lsp_implementations,
     { noremap = true, desc = '[TELE] Find lsp implementations' })
 vim.keymap.set('n', '<leader>lst', ts.lsp_type_definitions,
     { noremap = true, desc = '[TELE] Find lsp type definitions' })
+vim.api.nvim_set_keymap('n', '<Leader>qr',  '<cmd>:lua require("thisdevdane.lib.reload").reload()<CR>', { noremap = true, silent = true })

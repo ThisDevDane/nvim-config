@@ -1,3 +1,7 @@
+local function get_filename(path)
+   return path:absolute():sub(string.len(path:parent():expand()) + 2)
+end
+
 local function find_csproj(start_path)
     local plenary_path = require("plenary.path")
     local current_path = plenary_path:new(start_path)
@@ -57,10 +61,13 @@ local function find_user_secrets_file()
             end
         end
 
-        return '~/.microsoft/usersecrets/' .. user_secret_id .. '/secrets.json'
+        return {
+            project = get_filename(csproj_path),
+            path = '~/.microsoft/usersecrets/' .. user_secret_id .. '/secrets.json'
+        }
     end
 
-    return ""
+    return nil
 end
 
 
@@ -69,7 +76,7 @@ local function find_csharp_dll()
     local csproj_path, found = find_csproj(expanded_path)
 
     if found then
-        local assemlby_name = ""
+        local assembly_name = ""
         local framework = ""
 
         local parsed_csproj = parse_csproj(csproj_path)
@@ -79,11 +86,11 @@ local function find_csharp_dll()
                 framework = p.TargetFramework
             end
             if p.AssemblyName ~= nil then
-                assemlby_name = p.AssemblyName
+                assembly_name = p.AssemblyName
             end
         end
 
-        return csproj_path:parent():expand() .. "/bin/Debug/" .. framework .. "/" .. assemlby_name .. ".dll"
+        return csproj_path:parent():expand() .. "/bin/Debug/" .. framework .. "/" .. assembly_name .. ".dll"
     end
 
     return ""
