@@ -154,6 +154,13 @@ return require('packer').startup({
         use 'nvim-telescope/telescope-ui-select.nvim'
         use 'RRethy/vim-illuminate'
 
+        use {
+            'kevinhwang91/nvim-ufo',
+            requires = {
+                'kevinhwang91/promise-async'
+            },
+        }
+
         if packer_bootstrap then
             require('packer').sync()
         end
