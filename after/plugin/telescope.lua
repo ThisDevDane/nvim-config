@@ -6,14 +6,25 @@ require 'telescope'.setup {
             "%.pem",
             ".git/.*"
         }
+    },
+    extensions = {
+        ['ui-select'] = {
+            require('telescope.themes').get_cursor {
+                layout_config = {
+                    height = 12
+                }
+            }
+        }
     }
 }
+
+require("telescope").load_extension("ui-select")
 
 local ts = require('telescope.builtin')
 
 -- Builtin
 vim.keymap.set('n', '<leader>ft', ts.treesitter, { noremap = true, desc = '[TELE] Find tree-sitter' })
-vim.keymap.set('n', '<C-p>', function() 
+vim.keymap.set('n', '<C-p>', function()
     ts.git_files { show_untracked = true }
 end, { noremap = true, desc = '[TELE] Find git files' })
 vim.keymap.set('n', '<leader>ff', function()
@@ -33,4 +44,5 @@ vim.keymap.set('n', '<leader>lsi', ts.lsp_implementations,
     { noremap = true, desc = '[TELE] Find lsp implementations' })
 vim.keymap.set('n', '<leader>lst', ts.lsp_type_definitions,
     { noremap = true, desc = '[TELE] Find lsp type definitions' })
-vim.api.nvim_set_keymap('n', '<Leader>qr',  '<cmd>:lua require("thisdevdane.lib.reload").reload()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>qr', '<cmd>:lua require("thisdevdane.lib.reload").reload()<CR>',
+    { noremap = true, silent = true })

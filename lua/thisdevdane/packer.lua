@@ -151,6 +151,7 @@ return require('packer').startup({
                 'nvim-lua/plenary.nvim',
             },
         }
+        use 'nvim-telescope/telescope-ui-select.nvim'
         use 'RRethy/vim-illuminate'
 
         if packer_bootstrap then
