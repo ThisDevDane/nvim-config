@@ -116,10 +116,7 @@ cmp.setup({
     }
 })
 
-require('trouble').setup({
-    position = "right",
-    indent_lines = true,
-})
+require('trouble').setup({})
 vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle<cr>',
     { silent = true, noremap = true }
 )
