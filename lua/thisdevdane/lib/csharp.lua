@@ -2,36 +2,6 @@ local function get_filename(path)
     return path:absolute():sub(string.len(path:parent():expand()) + 2)
 end
 
-local function find_csproj(start_path)
-    local plenary_path = require("plenary.path")
-    local current_path = plenary_path:new(start_path)
-    local scan = require("plenary.scandir")
-
-    local idx = 0
-    local function look_for_csproj(path, recursion_depth)
-        if recursion_depth > 6 then
-            print("Reached maximum allowed recusion to find .csproj")
-            return plenary_path:new(), false
-        end
-        local found_csproj = false
-
-        local files = scan.scan_dir(path:expand(), { hidden = false, depth = 1 })
-        for _, file in pairs(files) do
-            if file:sub(-string.len(".csproj")) == ".csproj" then
-                found_csproj = true
-                return plenary_path:new(file), true
-            end
-        end
-
-        if found_csproj == false then
-            recursion_depth = recursion_depth + 1
-            path = path:parent()
-            return look_for_csproj(path, recursion_depth)
-        end
-    end
-    return look_for_csproj(current_path, idx)
-end
-
 local _path = require("plenary.path")
 local scan = require("plenary.scandir")
 
@@ -82,7 +52,7 @@ local function parse_csproj(csproj_path)
     local groups = handler.root.Project.PropertyGroup
 
     if #groups < 1 then
-        groups = { groups, {} }
+        groups = { groups }
     end
 
     return groups
