@@ -12,6 +12,13 @@ dap.configurations.cs = {
         name = "launch - netcoredbg",
         request = "launch",
         program = function()
+            -- return coroutine.create(function(dap_run_co)
+            --     local items = { csharp.find_csharp_dll() }
+            --     vim.ui.select(items, { prompt = 'foo> ' }, function(choice)
+            --         coroutine.resume(dap_run_co, choice)
+            --     end)
+            -- end)
+
             local input = ''
 
             vim.ui.input({ prompt = 'Path to dll: ', default = csharp.find_csharp_dll(), completion = 'file' },
