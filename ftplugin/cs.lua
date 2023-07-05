@@ -8,9 +8,9 @@ local user_secrets_prompt = function(opts)
     local dropdown = require("telescope.themes").get_dropdown({})
     opts = opts or dropdown
     pickers.new(opts, {
-        prompt_title = "User secrets",
+        prompt_title = "Edit user secrets for project",
         finder = finders.new_table {
-            results = { csharp.find_user_secrets_file() },
+            results = csharp.find_user_secrets_file(),
             entry_maker = function (entry)
                 return {
                     value = entry.path,
