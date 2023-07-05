@@ -12,20 +12,36 @@ dap.configurations.cs = {
         name = "launch - netcoredbg",
         request = "launch",
         program = function()
-            -- return coroutine.create(function(dap_run_co)
-            --     local items = { csharp.find_csharp_dll() }
-            --     vim.ui.select(items, { prompt = 'foo> ' }, function(choice)
-            --         coroutine.resume(dap_run_co, choice)
-            --     end)
-            -- end)
-
-            local input = ''
-
-            vim.ui.input({ prompt = 'Path to dll: ', default = csharp.find_csharp_dll(), completion = 'file' },
-                function(i)
-                    input = i
-                end)
-            return input
+            return coroutine.create(function(dap_run_co)
+                local pickers = require "telescope.pickers"
+                local finders = require "telescope.finders"
+                local conf = require("telescope.config").values
+                local actions = require "telescope.actions"
+                local action_state = require "telescope.actions.state"
+                local dropdown = require("telescope.themes").get_dropdown({})
+                pickers.new(dropdown, {
+                    prompt_title = "What project to debug?",
+                    finder = finders.new_table {
+                        results = csharp.find_csharp_dll(),
+                        entry_maker = function(entry)
+                            return {
+                                value = entry.path,
+                                display = entry.project,
+                                ordinal = entry.project
+                            }
+                        end
+                    },
+                    sorter = conf.generic_sorter(dropdown),
+                    attach_mappings = function(prompt_bufnr, _)
+                        actions.select_default:replace(function()
+                            actions.close(prompt_bufnr)
+                            local selection = action_state.get_selected_entry()
+                            coroutine.resume(dap_run_co, selection.value)
+                        end)
+                        return true
+                    end,
+                }):find()
+            end)
         end,
     },
 }

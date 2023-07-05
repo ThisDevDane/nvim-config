@@ -115,14 +115,14 @@ end
 
 
 local function find_csharp_dll()
-    local expanded_path = vim.fn.expand("%:p:h")
-    local csproj_path, found = find_csproj(expanded_path)
+    local result = {}
+    local files = find_files_with_suffix(_path:new(vim.fn.expand("%:p:h")), '.csproj')
 
-    if found then
+    for _, f in ipairs(files) do
         local assembly_name = ""
         local framework = ""
 
-        local parsed_csproj = parse_csproj(csproj_path)
+        local parsed_csproj = parse_csproj(f)
 
         for _, p in pairs(parsed_csproj) do
             if p.TargetFramework ~= nil then
@@ -133,10 +133,14 @@ local function find_csharp_dll()
             end
         end
 
-        return csproj_path:parent():expand() .. "/bin/Debug/" .. framework .. "/" .. assembly_name .. ".dll"
+
+        table.insert(result, {
+            project = get_filename(f),
+            path = f:parent():expand() .. "/bin/Debug/" .. framework .. "/" .. assembly_name .. ".dll"
+        })
     end
 
-    return ""
+    return result
 end
 
 return {
