@@ -28,7 +28,7 @@ return require('packer').startup({
                 require('tree-sitter-just').setup({})
             end
         }
-        use 'HiPhish/nvim-ts-rainbow2'
+        use 'HiPhish/nvim-ts-rainbow2' -- Is depcrated, swithc tohttps://gitlab.com/HiPhish/rainbow-delimiters.nvim (also change catppuccin integration)
 
 
         use { 'L3MON4D3/LuaSnip',
@@ -160,7 +160,13 @@ return require('packer').startup({
                 'kevinhwang91/promise-async'
             },
         }
-
+        use {
+            'andrewferrier/wrapping.nvim',
+            config = function ()
+                require('wrapping').setup()
+            end
+        }
+        use {'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate'}
         if packer_bootstrap then
             require('packer').sync()
         end
