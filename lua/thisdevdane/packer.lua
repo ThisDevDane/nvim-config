@@ -170,6 +170,7 @@ return require('packer').startup({
         if packer_bootstrap then
             require('packer').sync()
         end
+        use 'Issafalcon/lsp-overloads.nvim'
     end,
     config = {
         luarocks = {

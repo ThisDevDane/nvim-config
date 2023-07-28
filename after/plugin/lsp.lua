@@ -3,6 +3,21 @@ local lsp = require('lsp-zero').preset('recommended')
 lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
 
+    if client.server_capabilities.signatureHelpProvider then
+        require('lsp-overloads').setup(client, {
+            ui = {
+                border = 'rounded'
+            },
+            keymaps = {
+                next_signature = 'n',
+                previous_signature = 'p',
+                close_signature = 'q'
+            }
+        })
+
+        vim.keymap.set('n', 'gs', "<cmd>LspOverloadsSignature<CR>", { buffer = bufnr, desc = '[LSP] Show Signature(s)', noremap = true, silent = true })
+    end
+
     vim.keymap.set('n', '<leader>f', function()
         vim.lsp.buf.format { async = true }
     end, { buffer = bufnr, desc = '[LSP] Format' })
@@ -44,15 +59,9 @@ require('lspconfig').gopls.setup({
 })
 require('lspconfig').omnisharp.setup({
     enable_import_completion = true,
-    on_attach = function(client, bufnr)
-        lsp.default_keymaps({ buffer = bufnr })
-
-        vim.keymap.set('n', '<leader>f', function()
-            vim.lsp.buf.format { async = true }
-        end, { buffer = bufnr, desc = '[LSP] Format' })
-        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
-            { buffer = bufnr, desc = '[LSP] List code actions' })
-
+    enable_roslyn_analyzers = true,
+    organize_imports_on_format = true,
+    on_attach = function(client, _)
         -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483#issuecomment-1492605642
         local tokenModifiers = client.server_capabilities.semanticTokensProvider.legend.tokenModifiers
         for i, v in ipairs(tokenModifiers) do
