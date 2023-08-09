@@ -171,6 +171,13 @@ return require('packer').startup({
             require('packer').sync()
         end
         use 'Issafalcon/lsp-overloads.nvim'
+        use {
+            'echasnovski/mini.nvim',
+            config = function ()
+                require('mini.surround').setup()
+                require('mini.pairs').setup()
+            end
+        }
     end,
     config = {
         luarocks = {
