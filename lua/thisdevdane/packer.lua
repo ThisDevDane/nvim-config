@@ -167,9 +167,6 @@ return require('packer').startup({
             end
         }
         use {'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate'}
-        if packer_bootstrap then
-            require('packer').sync()
-        end
         use 'Issafalcon/lsp-overloads.nvim'
         use {
             'echasnovski/mini.nvim',
@@ -178,6 +175,9 @@ return require('packer').startup({
                 require('mini.pairs').setup()
             end
         }
+        if packer_bootstrap then
+            require('packer').sync()
+        end
     end,
     config = {
         luarocks = {
