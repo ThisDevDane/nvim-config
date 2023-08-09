@@ -9,9 +9,9 @@ lsp.on_attach(function(client, bufnr)
                 border = 'rounded'
             },
             keymaps = {
-                next_signature = 'n',
-                previous_signature = 'p',
-                close_signature = 'q'
+                next_signature = '<C-n>',
+                previous_signature = '<C-p>',
+                close_signature = '<C-q>'
             }
         })
 
