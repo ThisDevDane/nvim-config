@@ -6,3 +6,5 @@ vim.keymap.set('n', '<leader>ld', '<CMD>FloatermNew --autoclose=2 --height=0.9 -
     { desc = '[FT] LazyDocker' })
 vim.keymap.set('n', '<leader>k9', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 k9s<CR>',
     { desc = '[FT] k9s' })
+vim.keymap.set('n', '<leader>gl', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.5 --position=right glow -p %:p<CR>',
+    { desc = '[FT] Glow Mardkown Preview' })
