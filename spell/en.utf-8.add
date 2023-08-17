@@ -1,2 +1,8 @@
 justfile
 minikube
+kubectl
+localhost
+dotnet
+CRD
+crd
+CRDs
