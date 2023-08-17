@@ -57,7 +57,8 @@ return require('packer').startup({
                 { 'hrsh7th/cmp-path' },     -- Required
                 { 'hrsh7th/cmp-nvim-lsp' }, -- Required
                 { 'L3MON4D3/LuaSnip' },     -- Required
-                { 'saadparwaiz1/cmp_luasnip' }
+                { 'saadparwaiz1/cmp_luasnip' },
+                { 'onsails/lspkind.nvim' },
             }
         }
 

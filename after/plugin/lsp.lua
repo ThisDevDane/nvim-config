@@ -15,7 +15,8 @@ lsp.on_attach(function(client, bufnr)
             }
         })
 
-        vim.keymap.set('n', 'gs', "<cmd>LspOverloadsSignature<CR>", { buffer = bufnr, desc = '[LSP] Show Signature(s)', noremap = true, silent = true })
+        vim.keymap.set('n', 'gs', "<cmd>LspOverloadsSignature<CR>",
+            { buffer = bufnr, desc = '[LSP] Show Signature(s)', noremap = true, silent = true })
     end
 
     vim.keymap.set('n', '<leader>f', function()
@@ -111,8 +112,8 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'treesitter' },
-        { name = 'buffer',    keyword_length = 3 },
-        { name = 'luasnip',   keyword_length = 2 },
+        { name = 'buffer',                 keyword_length = 3 },
+        { name = 'luasnip',                keyword_length = 2 },
         { name = 'path' },
     },
     preselect = 'item',
@@ -120,9 +121,20 @@ cmp.setup({
         completeopt = 'menu,menuone,noinsert'
     },
     mapping = {
+        ['<C-Space>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
         ['<C-f>'] = cmp_action.luasnip_jump_forward(),
         ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+        ['<Tab>'] = cmp_action.luasnip_supertab(),
+        ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
+    },
+    formatting = {
+        fields = { 'abbr', 'kind', 'menu' },
+        format = require('lspkind').cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50,   -- prevent the popup from showing more than provided characters
+            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+        })
     }
 })
 
@@ -131,10 +143,10 @@ vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle<cr>',
     { silent = true, noremap = true }
 )
 vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-  {silent = true, noremap = true}
+    { silent = true, noremap = true }
 )
 vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
-  {silent = true, noremap = true}
+    { silent = true, noremap = true }
 )
 
 require "fidget".setup({})
