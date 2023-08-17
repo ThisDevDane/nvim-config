@@ -11,7 +11,7 @@ local user_secrets_prompt = function(opts)
         prompt_title = "Edit user secrets for project",
         finder = finders.new_table {
             results = csharp.find_user_secrets_file(),
-            entry_maker = function (entry)
+            entry_maker = function(entry)
                 return {
                     value = entry.path,
                     display = entry.project,
@@ -26,3 +26,6 @@ end
 vim.api.nvim_create_user_command('EditUserSecrets', function()
     user_secrets_prompt()
 end, {})
+
+local ls = require("luasnip")
+ls.filetype_extend('cs', { 'csharpdoc' })
