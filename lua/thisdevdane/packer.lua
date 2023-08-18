@@ -72,6 +72,13 @@ return require('packer').startup({
 
         -- Theme/UI
         use {
+            'rcarriga/nvim-notify',
+            config = function()
+                require("notify").setup()
+                vim.notify = require("notify")
+            end
+        }
+        use {
             'catppuccin/nvim',
             as = 'catppuccin',
         }
