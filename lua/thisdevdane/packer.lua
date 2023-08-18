@@ -28,8 +28,6 @@ return require('packer').startup({
                 require('tree-sitter-just').setup({})
             end
         }
-        use 'HiPhish/nvim-ts-rainbow2' -- Is depcrated, swithc tohttps://gitlab.com/HiPhish/rainbow-delimiters.nvim (also change catppuccin integration)
-
 
         use { 'L3MON4D3/LuaSnip',
             requires = { 'rafamadriz/friendly-snippets' }
