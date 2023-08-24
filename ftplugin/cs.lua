@@ -29,3 +29,10 @@ end, {})
 
 local ls = require("luasnip")
 ls.filetype_extend('cs', { 'csharpdoc' })
+
+
+local dap = require('dap')
+dap.listeners.before.event_initialized['tdd_csharp'] = function()
+    vim.cmd('make build')
+end
+

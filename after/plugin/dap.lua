@@ -11,6 +11,15 @@ dap.configurations.cs = {
         type = "coreclr",
         name = "launch - netcoredbg",
         request = "launch",
+        args = function()
+            return coroutine.create(function(dap_run_co)
+                vim.ui.input({ prompt = "Arguments (leave blank if non-desired):" }, function(value)
+                    local parts = {}
+                    for word in value:gmatch("%S+") do table.insert(parts, word) end
+                    coroutine.resume(dap_run_co, parts)
+                end)
+            end)
+        end,
         program = function()
             return coroutine.create(function(dap_run_co)
                 local pickers = require "telescope.pickers"

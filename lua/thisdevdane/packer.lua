@@ -33,6 +33,8 @@ return require('packer').startup({
             requires = { 'rafamadriz/friendly-snippets' }
         }
 
+        use { 'stevearc/dressing.nvim' }
+
         -- Session
         use 'rmagatti/auto-session'
 
@@ -168,15 +170,15 @@ return require('packer').startup({
         }
         use {
             'andrewferrier/wrapping.nvim',
-            config = function ()
+            config = function()
                 require('wrapping').setup()
             end
         }
-        use {'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate'}
+        use { 'psliwka/vim-dirtytalk', run = ':DirtytalkUpdate' }
         use 'Issafalcon/lsp-overloads.nvim'
         use {
             'echasnovski/mini.nvim',
-            config = function ()
+            config = function()
                 require('mini.surround').setup()
                 require('mini.pairs').setup()
             end
