@@ -100,7 +100,6 @@ return require('packer').startup({
         }
 
         -- Utilities
-        use_rocks "xml2lua"
         use { "nvim-lua/plenary.nvim" }
         use {
             "nvim-neotest/neotest",
@@ -183,13 +182,15 @@ return require('packer').startup({
                 require('mini.pairs').setup()
             end
         }
+        use {
+            "rest-nvim/rest.nvim",
+            requires = { "nvim-lua/plenary.nvim" },
+            config = function()
+                require("rest-nvim").setup({})
+            end
+        }
         if packer_bootstrap then
             require('packer').sync()
         end
     end,
-    config = {
-        luarocks = {
-            python_cmd = 'python3'
-        }
-    }
 })
