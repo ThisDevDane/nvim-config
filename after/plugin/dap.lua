@@ -6,6 +6,7 @@ dap.adapters.coreclr = {
     command = 'netcoredbg',
     args = { '--interpreter=vscode' }
 }
+
 dap.configurations.cs = {
     {
         type = "coreclr",
@@ -52,6 +53,10 @@ dap.configurations.cs = {
                 }):find()
             end)
         end,
+        cwd = function()
+            vim.notify("Debugging with cwd: " .. vim.fn.expand("%:p:h"), vim.log.levels.INFO)
+            return vim.fn.expand("%:p:h")
+        end
     },
 }
 
