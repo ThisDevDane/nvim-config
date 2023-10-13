@@ -74,8 +74,8 @@ local function find_user_secrets_file()
 
         if user_secret_id ~= "" then
             table.insert(result, {
-                project = get_filename(f),
-                path = '~/.microsoft/usersecrets/' .. user_secret_id .. '/secrets.json'
+                name = get_filename(f),
+                secrets_path = '~/.microsoft/usersecrets/' .. user_secret_id .. '/secrets.json'
             })
         end
     end
@@ -105,8 +105,10 @@ local function find_csharp_dll()
 
 
         table.insert(result, {
-            project = get_filename(f),
-            path = f:parent():expand() .. "/bin/Debug/" .. framework .. "/" .. assembly_name .. ".dll"
+            name = get_filename(f),
+            dll_path = f:parent():expand() .. "/bin/Debug/" .. framework .. "/" .. assembly_name .. ".dll",
+            project_root = f:parent():expand(),
+            project_path = f:expand()
         })
     end
 

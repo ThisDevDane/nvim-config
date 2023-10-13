@@ -7,61 +7,6 @@ dap.adapters.coreclr = {
     args = { '--interpreter=vscode' }
 }
 
-dap.configurations.cs = {
-    {
-        type = "coreclr",
-        name = "launch - netcoredbg",
-        request = "launch",
-        args = function()
-            return coroutine.create(function(dap_run_co)
-                vim.ui.input({ prompt = "Arguments (leave blank if non-desired):" }, function(value)
-                    local parts = {}
-                    for word in value:gmatch("%S+") do table.insert(parts, word) end
-                    coroutine.resume(dap_run_co, parts)
-                end)
-            end)
-        end,
-        program = function()
-            return coroutine.create(function(dap_run_co)
-                local pickers = require "telescope.pickers"
-                local finders = require "telescope.finders"
-                local conf = require("telescope.config").values
-                local actions = require "telescope.actions"
-                local action_state = require "telescope.actions.state"
-                local dropdown = require("telescope.themes").get_dropdown({})
-                pickers.new(dropdown, {
-                    prompt_title = "What project to debug?",
-                    finder = finders.new_table {
-                        results = csharp.find_csharp_dll(),
-                        entry_maker = function(entry)
-                            return {
-                                value = entry.path,
-                                display = entry.project,
-                                ordinal = entry.project
-                            }
-                        end
-                    },
-                    sorter = conf.generic_sorter(dropdown),
-                    attach_mappings = function(prompt_bufnr, _)
-                        actions.select_default:replace(function()
-                            actions.close(prompt_bufnr)
-                            local selection = action_state.get_selected_entry()
-                            coroutine.resume(dap_run_co, selection.value)
-                        end)
-                        return true
-                    end,
-                }):find()
-            end)
-        end,
-        cwd = function()
-            vim.notify("Debugging with cwd: " .. vim.fn.expand("%:p:h"), vim.log.levels.INFO)
-            return vim.fn.expand("%:p:h")
-        end
-    },
-}
-
-
-
 require('dap-go').setup()
 local ui = require("dapui")
 ui.setup()
