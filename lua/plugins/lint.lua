@@ -11,6 +11,7 @@ return {
                     'jsonlint',
                     'hadolint',
                     'vale',
+                    'selene',
                 }
             },
         }
@@ -21,6 +22,7 @@ return {
             json = { 'jsonlint' },
             dockerfile = { 'hadolint' },
             mardown = { 'vale' },
+            lua = { 'selene' },
         }
 
         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
