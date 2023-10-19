@@ -114,7 +114,12 @@ return require('packer').startup({
                 require("tmux").setup()
             end
         }
-        use 'lukas-reineke/indent-blankline.nvim'
+        use {
+            'lukas-reineke/indent-blankline.nvim',
+            config = function() 
+                require("ibl").setup()
+            end
+        }
         use 'voldikss/vim-floaterm'
         use 'jeffkreeftmeijer/vim-numbertoggle'
         use 'unblevable/quick-scope'
