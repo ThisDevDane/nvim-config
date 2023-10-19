@@ -1,4 +1,5 @@
 return {
     'andrewferrier/wrapping.nvim',
-    ft = 'markdown'
+    ft = 'markdown',
+    opts = {}
 }
