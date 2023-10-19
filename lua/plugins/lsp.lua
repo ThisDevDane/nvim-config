@@ -71,7 +71,6 @@ local lspconfig = {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
         { 'hrsh7th/cmp-nvim-lsp' },
-        { 'williamboman/mason.nvim' },
         { 'williamboman/mason-lspconfig.nvim' },
         { 'Issafalcon/lsp-overloads.nvim' },
     },
@@ -122,7 +121,7 @@ local lspconfig = {
                 ['rust_analyzer'] = { 'rust' }
             }
         })
-        require('mason').setup()
+
         require('mason-lspconfig').setup({
             ensure_installed = {
                 'lua_ls',
