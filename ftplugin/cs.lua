@@ -32,7 +32,7 @@ ls.filetype_extend('cs', { 'csharpdoc' })
 
 local dap = require('dap')
 dap.listeners.before.event_initialized['tdd_csharp'] = function()
-    vim.cmd('make build')
+    vim.cmd('make! build')
 end
 
 vim.keymap.set('n', '<F5>', function()
