@@ -127,7 +127,7 @@ local lspconfig = {
                 'lua_ls',
                 'tsserver',
                 'gopls',
-                'omnisharp',
+                'omnisharp@v1.39.8',
                 'svelte',
                 'tailwindcss',
                 'cssls',
