@@ -9,6 +9,8 @@ return {
             enabled = true,
             percentage = 0.05
         },
+        transparent_background = true,
+        term_colors = true,
         integrations = {
             cmp = true,
             dap = { enabled = true, enable_ui = true },
