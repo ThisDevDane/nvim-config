@@ -14,9 +14,9 @@
         ignore = false
     }
   },
-  keys = {
-    {'<leader>n', '<cmd>NvimTreeToggle<cr>', silent = true, desc = "Open Nvim-Tree"},
-  },
+  -- keys = {
+  --   {'<leader>n', '<cmd>NvimTreeToggle<cr>', silent = true, desc = "Open Nvim-Tree"},
+  -- },
   dependencies = {
     "nvim-tree/nvim-web-devicons",
   },
