@@ -1,14 +1,4 @@
-local lspzero = {
-    'VonHeikemen/lsp-zero.nvim',
-    lazy = true,
-    branch = "v3.x",
-    config = false,
-    init = function()
-        -- Disable automatic setup, we are doing it manually
-        vim.g.lsp_zero_extend_cmp = 0
-        vim.g.lsp_zero_extend_lspconfig = 0
-    end
-}
+local lspzero = { 'VonHeikemen/lsp-zero.nvim', branch = "v3.x" }
 
 local nvim_cmp = {
     'hrsh7th/nvim-cmp',
@@ -31,6 +21,7 @@ local nvim_cmp = {
 
         local cmp = require('cmp')
         local cmp_action = lsp_zero.cmp_action()
+        local cmp_format = require('lsp-zero').cmp_format({ details = true })
 
         cmp.setup({
             sources = {
@@ -41,26 +32,32 @@ local nvim_cmp = {
                 { name = 'luasnip',                keyword_length = 2 },
                 { name = 'path' },
             },
-            preselect = 'item',
-            completion = {
-                completeopt = 'menu,menuone,noinsert'
-            },
+            -- preselect = 'item',
+            -- completion = {
+            --     completeopt = 'menu,menuone,noinsert'
+            -- },
             mapping = {
                 ['<C-Space>'] = cmp.mapping.complete(),
-                ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 ['<C-f>'] = cmp_action.luasnip_jump_forward(),
                 ['<C-b>'] = cmp_action.luasnip_jump_backward(),
                 ['<Tab>'] = cmp_action.luasnip_supertab(),
                 ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
             },
-            formatting = {
-                fields = { 'abbr', 'kind', 'menu' },
-                format = require('lspkind').cmp_format({
-                    mode = 'symbol',       -- show only symbol annotations
-                    maxwidth = 50,         -- prevent the popup from showing more than provided characters
-                    ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-                })
-            }
+            snippet = {
+                expand = function(args)
+                    require('luasnip').lsp_expand(args.body)
+                end
+            },
+            formatting = cmp_format,
+            -- formatting = {
+            --     fields = { 'abbr', 'kind', 'menu' },
+            --     format = require('lspkind').cmp_format({
+            --         mode = 'symbol',       -- show only symbol annotations
+            --         maxwidth = 50,         -- prevent the popup from showing more than provided characters
+            --         ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+            --     })
+            -- }
         })
     end
 }
@@ -131,10 +128,15 @@ local lspconfig = {
                 'svelte',
                 'tailwindcss',
                 'cssls',
-                'rust_analyzer'
+                'rust_analyzer',
+                'html',
+                'htmx',
+                'templ'
             },
             handlers = {
-                lsp.default_setup,
+                function(server_name)
+                    require('lspconfig')[server_name].setup({})
+                end,
                 lua_ls = function()
                     -- (Optional) Configure lua language server for neovim
                     local lua_opts = lsp.nvim_lua_ls()

@@ -1,7 +1,6 @@
 return {
     'catppuccin/nvim',
     name = "catppuccin",
-    priority = 1000,
     opts = {
         flavour = 'macchiato',
         show_end_of_buffer = true,
@@ -13,7 +12,8 @@ return {
         term_colors = true,
         integrations = {
             cmp = true,
-            dap = { enabled = true, enable_ui = true },
+            dap = true,
+            dap_ui = true,
             fidget = true,
             gitsigns = true,
             headlines = true,
